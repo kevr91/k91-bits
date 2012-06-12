@@ -8,13 +8,28 @@ using namespace std;
 
 typedef unsigned long LBYTE;
 
+// 2-bit sequence table for binary conversions
+const LBYTE ul_bit_seq[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
+
+// Make sure the binary string passed contains ONLY 1's and 0's
+LBYTE get_decimal(string binary)
+{
+    LBYTE ldecimal = 0;
+    for(int i = 7, x = 0; i >= 0; i--, x++)
+    {
+        if(binary[x] == '1')
+            ldecimal = ldecimal + ul_bit_seq[i];
+    }
+    return ldecimal;
+}
+
 string get_binary(LBYTE in_decimal)
 {
-    LBYTE ul_bit_seq[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
     string str_binary;
     for(int i = 7; i >= 0; i--)
     {
-        if((in_decimal / ul_bit_seq[i]) == 1)
+        //LBYTE leftover = in_decimal % ul_bit_seq[i];
+        if((in_decimal / ul_bit_seq[i]) >= 1)
         {
             in_decimal = in_decimal - ul_bit_seq[i];
             str_binary = str_binary + "1";
@@ -54,5 +69,7 @@ int main(int argc, char *argv[])
     cout.setf(ios::dec, ios::basefield);
     cout << "Decimal number: " << n_byte << '\n'; 
     cout << "Binary sequence: " << get_binary(n_byte) << '\n';
+
+    cout << "Binary converted back to decimal (test): " << get_decimal(get_binary(n_byte)) << '\n';
     return 0;
 }
