@@ -1,4 +1,4 @@
-/* by Kevin Morris, calculates byte representations */
+/* by Kevin Morris, calculates bit representations */
 // C++ Program
 
 #include <iostream>
